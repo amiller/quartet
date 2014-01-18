@@ -7,3 +7,9 @@
 [submodule "rtmodel"]
 	path = rtmodel
 	url = https://github.com/amiller/rtmodel
+[submodule "SensorKinect"]
+	path = SensorKinect
+	url = https://github.com/ph4m/SensorKinect
+[submodule "OpenNI"]
+	path = OpenNI
+	url = https://github.com/OpenNI/OpenNI
