@@ -54,7 +54,8 @@ def once():
     rimg.compute_points()
     global points
     points = rimg.point_model()
-    window.lookat = points.RT[:3,3] + points.xyz[:,:3].mean(0)
+    pts = (points.RT[:3,3] + points.xyz[:,:3])
+    window.lookat = pts[np.isnan(pts.sum(0))].mean(0)
     window.Refresh()
 
     pylab.waitforbuttonpress(0.05)
