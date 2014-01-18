@@ -23,9 +23,10 @@ import pylab
 
 def show_depth(name, depth):
     im = cv.CreateImage((depth.shape[1],depth.shape[0]), 8, 3)
-    cv.SetData(im, colormap.color_map(depth))
+    cv.SetData(im, colormap.color_map(depth/2))
     cv.ShowImage(name, im)
-
+    #pylab.imshow(colormap.color_map(depth))
+    #pylab.waitforbuttonpress(0.05)
 
 depth_cache = []
 
@@ -63,7 +64,7 @@ def record(filename=None, cams=(0,), do_rgb=False):
     dataset.folder = foldername
 
     os.mkdir(foldername)
-    shutil.copytree('data/newest_calibration/config', '%s/config' % foldername)
+    #shutil.copytree('data/newest_calibration/config', '%s/config' % foldername)
     print "Created new dataset: %s" % foldername
 
     frame = 0
