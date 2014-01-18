@@ -1,0 +1,9 @@
+[submodule "opennpy"]
+	path = opennpy
+	url = https://github.com/amiller/opennpy
+[submodule "wxpy3d"]
+	path = wxpy3d
+	url = https://github.com/amiller/wxpy3d
+[submodule "rtmodel"]
+	path = rtmodel
+	url = https://github.com/amiller/rtmodel
