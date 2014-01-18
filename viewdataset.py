@@ -21,5 +21,6 @@ def go(dset=None):
 
     while True:
         dataset.advance()
-        show_depth("depth_0", dataset.depths[0])
+        for i,depth in enumerate(dataset.depths):
+            show_depth("depth_%d" % (i,), depth)
         pylab.waitforbuttonpress(0.05)
