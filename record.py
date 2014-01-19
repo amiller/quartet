@@ -14,7 +14,7 @@ import opennpy
 import numpy as np
 import os
 import shutil
-import cv
+import cv2
 import subprocess
 import dataset
 import colormap
@@ -22,9 +22,7 @@ import pylab
 
 
 def show_depth(name, depth):
-    im = cv.CreateImage((depth.shape[1],depth.shape[0]), 8, 3)
-    cv.SetData(im, colormap.color_map(depth/2))
-    cv.ShowImage(name, im)
+    cv2.imshow(name, colormap.color_map(depth/2))
     #pylab.imshow(colormap.color_map(depth))
     #pylab.waitforbuttonpress(0.05)
 
@@ -77,8 +75,8 @@ def record(filename=None, cams=(0,), do_rgb=False):
 
                 if do_rgb:
                     (rgb,_) = opennpy.sync_get_video(cam)
-                    cv.CvtColor(rgb, rgb, cv.CV_RGB2BGR)
-                    cv.SaveImage('%s/rgb_%05d_%d.png' % (foldername,frame,cam), rgb)
+                    rgb = cv2.cvtColor(rgb, cv2.cv.CV_RGB2BGR)
+                    cv2.imwrite('%s/rgb_%05d_%d.png' % (foldername,frame,cam), rgb)
             
             if frame % 30 == 0:
                 print 'frame: %d' % frame
