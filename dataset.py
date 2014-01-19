@@ -45,10 +45,11 @@ def advance(skip=1):
                 if not depths: raise
         try:
             rgb = cv2.imread('%s/rgb_%05d_%d.png' % (current_path, frame_num,cam))
+            if rgb is None: continue
             rgb = cv2.cvtColor(rgb, cv2.cv.CV_RGB2BGR)
             rgbs.append(np.fromstring(rgb.tostring(),'u1').reshape(480,640,3))
         except IOError:
-            pass
+            continue
 
 
 def load_dataset(pathname):
