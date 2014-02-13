@@ -12,6 +12,7 @@ from OpenGL.GL import *
 from rtmodel import pointmodel
 from rtmodel.rangeimage import RangeImage
 from rtmodel.camera import kinect_camera
+from config import KINECT_PATH
 cam = kinect_camera()
 
 if not 'window' in globals():
@@ -86,9 +87,9 @@ def once():
     cv2.waitKey(50)
     
 
-def go(dset=None):
+def go(dset=None, path=KINECT_PATH):
     if dset is None:
-        dataset.load_random_dataset()
+        dataset.load_random_dataset(path)
     else:
         dataset.load_dataset(dset)
 

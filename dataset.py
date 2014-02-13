@@ -19,7 +19,7 @@ import os
 import cv2
 import re
 import snappy
-
+from config import KINECT_PATH
 
 depths = []
 rgbs = []
@@ -72,13 +72,11 @@ def load_dataset(pathname):
     depths = [None, None]
     rgbs = [None, None]
 
-def load_random_dataset():
+def load_random_dataset(path=KINECT_PATH):
     # Look in the datasets folder, find all the datasets
     # pick one
-    sets = glob.glob('data/sets/*/')
-    import random
-    choice = random.choice(sets)
-    load_dataset(choice)
+    sets = glob.glob(path + '/*/')
+    load_dataset(sorted(sets)[-1])
 
 
 if __name__ == "__main__":
