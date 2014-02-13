@@ -52,47 +52,46 @@ def post_draw():
 
 window.Refresh()
 
+def show_rgb(name, image):
+    cv2.imshow(name, image)
+
 def show_depth(name, depth):
-    cv2.imshow(name, colormap.color_map(depth/2))
+    cv2.imshow(name, 1024./depth)
 
-def once():
+def once(rgbs, depths, threed=False):
     # 2D colormap preview
-    dataset.advance()
-    for i,depth in enumerate(dataset.depths):
-        show_depth("depth_%d" % (i,), depth)
-    
-    # 3D point cloud view
-    depth = dataset.depths[0]
-    rimg = RangeImage(depth, cam)
-    global points
-    if dataset.rgbs:
+    global depth, rgb
+    if not threed:
+        for i,depth in depths:
+            show_depth("depth_%d" % (i,), depth)
+        for i,rgb in rgbs:
+            show_rgb("image_%d" % (i,), rgb)
+    if threed and depths:
+        # 3D point cloud view
+        for i,_depth in depths:
+            print 'depth', i
+            if i == 2: depth = _depth
+        for i,_rgb in rgbs:
+            print 'rgb', i
+            if i == 1: rgb = _rgb
+        if not ('depth' in globals() and 'rgb' in globals()): return
+        rimg = RangeImage(depth, cam)
         rimg.compute_points()
+        global points
+        show_rgb("image_%d" % (2,), rgb)
         points = rimg.point_model()
-        rgb = dataset.rgbs[0]
-        points.rgba = np.empty((rgb.shape[0]*rgb.shape[1],4),dtype='f')
-        points.rgba[:,:3] = rgb.reshape((-1,3)).astype('f')/256.0
-    else:
-        #rimg.filter()
-        rimg.compute_points()
-        rimg.compute_normals()
-        points = rimg.point_model()
-
-        
-    #pts = (points.RT[:3,3] + points.xyz[:,:3])
-    #window.lookat = pts[~np.isnan(pts.sum(0))].mean(0)
-    print window.lookat
-    window.Refresh()
-
-    #pylab.waitforbuttonpress(0.05)
+        pts = (points.RT[:3,3] + points.xyz[:,:3])
+        #points.rgba = np.empty((rgb.shape[0]*rgb.shape[1],4),dtype='f')
+        #points.rgba[:,:3] = rgb.reshape((-1,3)).astype('f')[:,::-1]/256.0
+        window.lookat = pts[~np.isnan(pts.sum(0))].mean(1)
+        window.Refresh()
     cv2.waitKey(50)
     
 
-def go(dset=None, path=KINECT_PATH):
+def go(dset=None, path=KINECT_PATH, threed=False):
     if dset is None:
         dataset.load_random_dataset(path)
     else:
         dataset.load_dataset(dset)
-
-    while True:
-        dataset.advance()
-        once()
+    for rgbs, depths in dataset.iter(skip=1):
+        once(rgbs, depths, threed=threed)
