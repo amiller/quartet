@@ -1,7 +1,6 @@
 import matplotlib
 matplotlib.use('WX')
 import record
-import viewdataset
 import signal
 import sys
 import argparse
@@ -24,8 +23,10 @@ def main():
         while 1:
             record.preview(range(NUM_KINECTS))
     elif mode == 'playback':
+        import viewdataset
         viewdataset.go(path=KINECT_PATH)
     elif mode == 'playback3d':
+        import viewdataset
         viewdataset.go(path=KINECT_PATH, threed=True)
     elif mode == 'save':
         record.record(cams=range(NUM_KINECTS), do_rgb=True)
