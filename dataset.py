@@ -17,40 +17,48 @@ import gzip_patch
 import gzip
 import os
 import cv2
+import re
+import snappy
+
 
 depths = []
 rgbs = []
 current_path = None
 frame_num = None
 
-
-def advance(skip=1):
+FN_RE = re.compile('(.+)_(.+)_(.+)_(.+)\.(.+)')
+def iter(rgb=True, depth=True, skip=1):
     # Load the image
-    global frame_num, depths, rgbs
-    frame_num += skip
     depths = []
     rgbs = []
-    for cam in [0]:#range(len(config.cameras)):
-        try:
-            # Try the old style with no frame field (backward compatible)
-            with gzip.open('%s/depth_%05d.npy.gz' % (current_path, frame_num),
-                           'rb') as f:
-                depths.append(np.load(f))
-        except IOError:
-            try:
-                with gzip.open('%s/depth_%05d_%d.npy.gz' % (current_path, frame_num, cam),
-                               'rb') as f:
-                    depths.append(np.load(f))
-            except IOError:
-                if not depths: raise
-        try:
-            rgb = cv2.imread('%s/rgb_%05d_%d.png' % (current_path, frame_num,cam))
-            if rgb is None: continue
-            rgb = cv2.cvtColor(rgb, cv2.cv.CV_RGB2BGR)
-            rgbs.append(np.fromstring(rgb.tostring(),'u1').reshape(480,640,3))
-        except IOError:
-            continue
+    fns = []
+    for fn in glob.glob(current_path + '/*'):
+        fnbase = os.path.basename(fn)
+        fngroups = list(FN_RE.search(fnbase).groups())
+        fngroups[1] = float(fngroups[1])
+        fngroups[3] = int(fngroups[3])
+        fns.append((fn, fngroups))
+    fns.sort(key=lambda x: x[1][1])
+    fns = fns[::skip]
+    for fn, fngroups in fns:
+        if (fn.endswith('.ppm') or fn.endswith('.jpg')) and rgb:
+            yield ((fngroups[3], cv2.imread(fn)),), ()
+        elif fn.endswith('.snappy') and depth:
+            d = np.fromstring(snappy.decompress(open(fn).read()), dtype=np.uint16).reshape((480, 640))
+            yield (), ((fngroups[3], d),)
+        #if rgbs or depths:
+        #    yield rgbs, depths
 
+def advance():
+    global depths, rgbs, frame_iter
+    while True:
+        r, d = frame_iter.next()
+        print len(r),len(d)
+        for (cam,rgb) in r:
+            rgbs[cam] = rgb
+        for (cam,depth) in d:
+            depths[cam] = depth
+        if not (None in depths or None in rgbs): break
 
 def load_dataset(pathname):
     global current_path, frame_num
@@ -58,7 +66,11 @@ def load_dataset(pathname):
     # Check for consistency, count the number of images
     current_path = pathname
     frame_num = 0
-
+    global frame_iter
+    frame_iter = iter()
+    global depths, rgbs
+    depths = [None, None]
+    rgbs = [None, None]
 
 def load_random_dataset():
     # Look in the datasets folder, find all the datasets

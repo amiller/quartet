@@ -2,7 +2,7 @@ import opennpy
 import numpy as np
 import os
 import shutil
-import cv
+import cv2
 import subprocess
 import dataset
 import colormap
@@ -52,9 +52,7 @@ def post_draw():
 window.Refresh()
 
 def show_depth(name, depth):
-    im = cv.CreateImage((depth.shape[1],depth.shape[0]), 8, 3)
-    cv.SetData(im, colormap.color_map(depth/2))
-    cv.ShowImage(name, im)
+    cv2.imshow(name, colormap.color_map(depth/2))
 
 def once():
     # 2D colormap preview
@@ -84,7 +82,8 @@ def once():
     print window.lookat
     window.Refresh()
 
-    pylab.waitforbuttonpress(0.05)
+    #pylab.waitforbuttonpress(0.05)
+    cv2.waitKey(50)
     
 
 def go(dset=None):
