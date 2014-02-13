@@ -12,17 +12,21 @@ def kill():
     sudo('killall -9 python')
 
 def update():
-    put('quartet_amiller')
+    with cd('quartet_amiller'):
+        run('git pull origin master')
 
 def inspect():
     with cd('quartet_amiller'):
         run('python inspect_cams.py')
 
+def preview():
+    with cd('quartet_amiller'):
+        run('python previewserver.py')
+
 def setup():
     sudo('apt-get update')
-    sudo('apt-get install -y libusb-1.0-0-dev freeglut3-dev doxygen cython ipython python-scipy python-numpy python-opencv python-wxgtk2.8 git default-jdk build-essential g++ cmake emacs23-nox python-wxgtk2.8 python-opengl git python-matplotlib python-snappy')
-    put('quartet_amiller')
-    #run('git clone git@github.com:amiller/quartet.git')
+    sudo('apt-get install -y libusb-1.0-0-dev freeglut3-dev doxygen cython ipython python-scipy python-numpy python-opencv python-wxgtk2.8 git default-jdk build-essential g++ cmake emacs23-nox python-wxgtk2.8 python-opengl git python-matplotlib python-snappy python-zmq')
+    run('git clone https://github.com/amiller/quartet quartet_amiller')
     with cd('quartet_amiller'):
         run('git submodule init')
         run('git submodule update')
