@@ -16,7 +16,9 @@ def main():
         print 'command', cmd
         if cmd == 'getframe':
             depth,_ = opennpy.sync_get_depth(0)
+            depth = depth.copy()
             rgb,_ = opennpy.sync_get_video(0)
+            rgb = rgb.copy()
             socket.send_pyobj((depth,rgb))
 
 if __name__ == '__main__': main()
