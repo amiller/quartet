@@ -34,11 +34,10 @@ def preview(cams):
         #(depth,_) = opennpy.sync_get_depth(cam)
         (depth,_) = freenect.sync_get_depth(cam, freenect.DEPTH_MM)
         show_depth('depth_%d'%cam, depth)
-        cv2.waitKey(5)
         #(rgb,_) = opennpy.sync_get_video(cam)
         (rgb,_) = freenect.sync_get_video(cam)
         show_rgb('rgb_%d'%cam, rgb)
-        cv2.waitKey(5)
+        cv2.waitKey(20)
 
 def go(dset=None, path=KINECT_PATH, threed=False):
     if dset is None:
