@@ -47,11 +47,11 @@ def niview():
         run('DISPLAY=:0 ./NiViewer')
 
 def setup():
-    #sudo('apt-get update')
-    sudo('apt-get install -y libusb-1.0-0-dev freeglut3-dev libxi-dev libxmu-dev doxygen cython ipython python-scipy python-numpy python-opencv python-wxgtk2.8 git default-jdk build-essential g++ cmake emacs23-nox python-wxgtk2.8 python-opengl git python-matplotlib python-snappy python-zmq')
-    append('~/.bashrc', 'DISPLAY=:0 xhost +x localhost')
-    append('~/.bashrc', 'export DISPLAY=:0')
-    #run('git clone https://github.com/amiller/quartet quartet_amiller')
+    sudo('apt-get update')
+    sudo('apt-get install -y libusb-1.0-0-dev freeglut3-dev libxi-dev libxmu-dev doxygen cython ipython python-scipy python-numpy python-opencv libopencv-dev python-wxgtk2.8 git default-jdk build-essential g++ cmake emacs23-nox python-wxgtk2.8 python-opengl git python-matplotlib python-snappy libsnappy-dev python-zmq indicator-cpufreq')
+    #append('~/.bashrc', 'DISPLAY=:0 xhost +x localhost')
+    #append('~/.bashrc', 'export DISPLAY=:0')
+    run('git clone https://github.com/amiller/quartet quartet_amiller')
     with cd('quartet_amiller'):
         run('git submodule init')
         run('git submodule update')
@@ -76,4 +76,3 @@ def setup():
         with cd('rtmodel'):
             sudo('python setup.py install')
 
-#sudo pip install pyopengl
