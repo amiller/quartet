@@ -10,7 +10,6 @@ def main():
     context = zmq.Context()
     socket = context.socket(zmq.PAIR)
     socket.bind('tcp://*:4567')
-    opennpy.align_depth_to_rgb()
     while 1: 
         cmd = socket.recv()
         print 'command', cmd
