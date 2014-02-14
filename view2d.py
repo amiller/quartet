@@ -32,7 +32,6 @@ def preview(cams):
     for cam in cams:
         (depth,_) = opennpy.sync_get_depth(cam)
         (rgb,_) = opennpy.sync_get_video(cam)
-        print(depth.shape)
         show_depth('depth_%d'%cam, depth)
         show_rgb('rgb_%d'%cam, rgb)
     cv2.waitKey(50)
