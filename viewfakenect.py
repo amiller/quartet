@@ -9,7 +9,7 @@ def view(filename):
     cv2.namedWindow('depth')
     cv2.moveWindow('rgb',640,0)
     cv2.moveWindow('depth',0,0)
-    files = glob.glob('%s/*.snappy' % (filename,)) + glob.glob('%s/*.jpg' % (filename,))
+    files = glob.glob('%s/*.dump' % (filename,)) + glob.glob('%s/*.jpg' % (filename,))
     files = sorted(files, key=lambda f: os.path.basename(f)[2:])
     for f in files:
         if f.endswith('.jpg'):
