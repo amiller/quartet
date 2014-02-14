@@ -31,10 +31,10 @@ def preview(cams):
     cv2.moveWindow('rgb_0', 640, 0)
     for cam in cams:
         (depth,_) = opennpy.sync_get_depth(cam)
+        show_depth('depth_%d'%cam, depth)
         (rgb,_) = opennpy.sync_get_video(cam)
-        #show_depth('depth_%d'%cam, depth)
         show_rgb('rgb_%d'%cam, rgb)
-    cv2.waitKey(50)
+    cv2.waitKey(5)
 
 def go(dset=None, path=KINECT_PATH, threed=False):
     if dset is None:
