@@ -36,6 +36,9 @@ def main():
     elif mode == 'save':
         mkdir_p(KINECT_PATH)
         subprocess.call('regview %s/%f' % (KINECT_PATH, time.time()), shell=True)
+    elif mode == 'calib':
+        mkdir_p(KINECT_PATH)
+        subprocess.call('regview %s/%f 8' % (KINECT_PATH, time.time()), shell=True)
 
 def mkdir_p(path):
     import errno
