@@ -13,3 +13,6 @@
 [submodule "OpenNI"]
 	path = OpenNI
 	url = https://github.com/OpenNI/OpenNI
+[submodule "libfreenect"]
+	path = libfreenect
+	url = https://github.com/amiller/libfreenect
