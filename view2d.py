@@ -30,8 +30,8 @@ def preview(cams):
     cv2.namedWindow('rgb_0')
     cv2.moveWindow('rgb_0', 640, 0)
     for cam in cams:
-        (depth,_) = opennpy.sync_get_depth(cam)
-        show_depth('depth_%d'%cam, depth)
+        #(depth,_) = opennpy.sync_get_depth(cam)
+        #show_depth('depth_%d'%cam, depth)
         (rgb,_) = opennpy.sync_get_video(cam)
         show_rgb('rgb_%d'%cam, rgb)
     cv2.waitKey(5)
