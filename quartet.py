@@ -17,6 +17,7 @@ def main():
     subparser.set_defaults(mode='display')
     subparser = subparsers.add_parser('save')
     subparser.set_defaults(mode='save')
+    subparser.add_argument('--decimate', dest='decimate', type=int, default='0')
     subparser = subparsers.add_parser('playback')
     subparser.set_defaults(mode='playback')
     subparser = subparsers.add_parser('playback3d')
@@ -35,10 +36,7 @@ def main():
         viewdataset.go(path=KINECT_PATH, threed=True)
     elif mode == 'save':
         mkdir_p(KINECT_PATH)
-        subprocess.call('regview %s/%f' % (KINECT_PATH, time.time()), shell=True)
-    elif mode == 'calib':
-        mkdir_p(KINECT_PATH)
-        subprocess.call('regview %s/%f 8' % (KINECT_PATH, time.time()), shell=True)
+        subprocess.call('regview %s/%f %s' % (KINECT_PATH, time.time(), args['decimate']), shell=True)
 
 def mkdir_p(path):
     import errno
