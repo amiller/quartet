@@ -8,8 +8,6 @@ import dataset
 import pylab
 from config import KINECT_PATH
 
-window.Refresh()
-
 def show_rgb(name, image):
     cv2.imshow(name, image)
 
