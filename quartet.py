@@ -7,6 +7,7 @@ import sys
 import argparse
 import subprocess
 from config import NUM_KINECTS, KINECT_PATH
+import time
 
 def main():
     parser = argparse.ArgumentParser(description='Kinect Data Saver')
@@ -22,17 +23,17 @@ def main():
     args = vars(parser.parse_args())    
     mode = args['mode']
     if mode == 'display':
-        subprocess.popen('regview', shell=True)
+        subprocess.call('regview', shell=True)
     elif mode == 'playback':
         import glob
         import viewfakenect
-        sets = glob.glob(path + '/*/')
+        sets = glob.glob(KINECT_PATH + '/*/')
         viewfakenect.view(sorted(sets)[-1])
     elif mode == 'playback3d':
         import viewdataset
         viewdataset.go(path=KINECT_PATH, threed=True)
     elif mode == 'save':
-        record.record(cams=range(NUM_KINECTS), do_rgb=True)
+        subprocess.call(('regview %s/%f' % (KINECT_PATH, time.time())).split(), shell=True)
 
 if __name__ == '__main__':
     main()

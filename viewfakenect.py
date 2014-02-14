@@ -4,6 +4,10 @@ import numpy as np
 import os
 
 def view(filename):
+    cv2.namedWindow('rgb')
+    cv2.namedWindow('depth')
+    cv2.moveWindow('rgb',640,0)
+    cv2.moveWindow('depth',0,0)
     files = glob.glob('%s/*.pgm' % (filename,)) + glob.glob('%s/*.ppm' % (filename,))
     files = sorted(files, key=lambda f: os.path.basename(f)[2:])
     for f in files:
