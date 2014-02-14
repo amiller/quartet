@@ -33,7 +33,7 @@ def main():
         import viewdataset
         viewdataset.go(path=KINECT_PATH, threed=True)
     elif mode == 'save':
-        subprocess.call(('regview %s/%f' % (KINECT_PATH, time.time())).split(), shell=True)
+        subprocess.call('regview %s/%f' % (KINECT_PATH, time.time()), shell=True)
 
 if __name__ == '__main__':
     main()
