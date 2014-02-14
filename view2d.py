@@ -5,7 +5,6 @@ import shutil
 import cv2
 import subprocess
 import dataset
-import pylab
 from config import KINECT_PATH
 
 def show_rgb(name, image):
@@ -26,11 +25,13 @@ def once(rgbs, depths):
 def preview(cams):
     opennpy.align_depth_to_rgb()
     opennpy.sync_update()
-    global depth_cache
     for cam in cams:
         (depth,_) = opennpy.sync_get_depth(cam)
+        (rgb,_) = opennpy.sync_get_video(cam)
         print(depth.shape)
         show_depth('depth_%d'%cam, depth)
+        show_rgb('rgb_%d'%cam, rgb)
+    cv2.waitKey(50)
 
 def go(dset=None, path=KINECT_PATH, threed=False):
     if dset is None:
