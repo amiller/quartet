@@ -1,4 +1,5 @@
-import opennpy
+#import opennpy
+import freenect
 import numpy as np
 import os
 import shutil
@@ -23,17 +24,19 @@ def once(rgbs, depths):
     cv2.waitKey(50)
 
 def preview(cams):
-    opennpy.align_depth_to_rgb()
-    opennpy.sync_update()
+    #opennpy.align_depth_to_rgb()
+    #opennpy.sync_update()
     cv2.namedWindow('depth_0')
     cv2.moveWindow('depth_0', 0, 0)
     cv2.namedWindow('rgb_0')
     cv2.moveWindow('rgb_0', 640, 0)
     for cam in cams:
-        (depth,_) = opennpy.sync_get_depth(cam)
+        #(depth,_) = opennpy.sync_get_depth(cam)
+        (depth,_) = freenect.sync_get_depth(cam, freenect.DEPTH_MM)
         show_depth('depth_%d'%cam, depth)
         cv2.waitKey(5)
-        (rgb,_) = opennpy.sync_get_video(cam)
+        #(rgb,_) = opennpy.sync_get_video(cam)
+        (rgb,_) = freenect.sync_get_video(cam)
         show_rgb('rgb_%d'%cam, rgb)
         cv2.waitKey(5)
 
