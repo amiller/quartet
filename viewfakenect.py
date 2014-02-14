@@ -16,6 +16,6 @@ def view(filename):
             cv2.imshow('rgb', cv2.imread(f))
             cv2.waitKey(20)
         if f.endswith('.dump'):
-            depth = np.fromstring(snappy.decompress(open(fn).read()), dtype='uint16').reshape((480,640))
+            depth = np.fromstring(snappy.decompress(open(f).read()), dtype='uint16').reshape((480,640))
             cv2.imshow('depth', 1024./depth)
             cv2.waitKey(20)
