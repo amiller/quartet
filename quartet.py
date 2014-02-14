@@ -34,8 +34,16 @@ def main():
         import viewdataset
         viewdataset.go(path=KINECT_PATH, threed=True)
     elif mode == 'save':
-        os.makedirs(KINECT_PATH, exist_ok=True)
+        mkdir_p(KINECT_PATH)
         subprocess.call('regview %s/%f' % (KINECT_PATH, time.time()), shell=True)
+
+def mkdir_p(path):
+    try:
+        os.makedirs(path)
+    except OSError as exc: # Python >2.5
+        if exc.errno == errno.EEXIST and os.path.isdir(path):
+            pass
+        else: raise
 
 if __name__ == '__main__':
     main()
