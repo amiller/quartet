@@ -30,7 +30,6 @@ def preview(cams):
     for cam in cams:
         (depth,_) = opennpy.sync_get_depth(cam)
         print(depth.shape)
-        print "Depth aligned:", is_aligned(depth)
         depth_cache.append(np.array(depth))
         depth_cache = depth_cache[-6:]
         show_depth('depth_%d'%cam, depth)
