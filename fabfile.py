@@ -11,9 +11,17 @@ def kill():
     sudo('killall -9 XnSensorServer')
     sudo('killall -9 python')
 
+def renice():
+    sudo('renice +20 $(pidof XnSensorServer)')
+    sudo('renice -20 $(pidof python)')
+
 def update():
     with cd('quartet_amiller'):
+        run('git checkout .')
         run('git pull origin master')
+        run('git submodule update')
+        with cd('opennpy'):
+            sudo('python setup.py install')
 
 def inspect():
     with cd('quartet_amiller'):
@@ -22,6 +30,15 @@ def inspect():
 def preview():
     with cd('quartet_amiller'):
         run('python previewserver.py')
+
+def display():
+    with cd('quartet_amiller'):
+        run('DISPLAY=:0 xhost +x localhost')
+        run('DISPLAY=:0 python quartet.py display')
+
+def niview():
+    with cd('quartet_amiller/OpenNI/Platform/Linux/Redist/OpenNI-Bin-Dev-Linux-x64-v1.5.7.10/Samples/Bin/x64-Release'):
+        run('DISPLAY=:0 ./NiViewer')
 
 def setup():
     sudo('apt-get update')
