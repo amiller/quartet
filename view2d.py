@@ -32,7 +32,7 @@ def preview(cams):
     cv2.moveWindow('rgb_0', 640, 0)
     for cam in cams:
         #(depth,_) = opennpy.sync_get_depth(cam)
-        (depth,_) = freenect.sync_get_depth(cam, freenect.DEPTH_MM)
+        (depth,_) = freenect.sync_get_depth(cam, freenect.DEPTH_REGISTERED)
         show_depth('depth_%d'%cam, depth)
         #(rgb,_) = opennpy.sync_get_video(cam)
         (rgb,_) = freenect.sync_get_video(cam)
