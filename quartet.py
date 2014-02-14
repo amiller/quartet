@@ -8,6 +8,7 @@ import argparse
 import subprocess
 from config import NUM_KINECTS, KINECT_PATH
 import time
+import os
 
 def main():
     parser = argparse.ArgumentParser(description='Kinect Data Saver')
