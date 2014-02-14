@@ -38,6 +38,7 @@ def main():
         subprocess.call('regview %s/%f' % (KINECT_PATH, time.time()), shell=True)
 
 def mkdir_p(path):
+    import errno
     try:
         os.makedirs(path)
     except OSError as exc: # Python >2.5
