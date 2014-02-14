@@ -1,6 +1,7 @@
 import matplotlib
 matplotlib.use('WX')
 import record
+import view2d
 import signal
 import sys
 import argparse
@@ -21,7 +22,7 @@ def main():
     mode = args['mode']
     if mode == 'display':
         while 1:
-            record.preview(range(NUM_KINECTS))
+            view2d.preview(range(NUM_KINECTS))
     elif mode == 'playback':
         import viewdataset
         viewdataset.go(path=KINECT_PATH)
