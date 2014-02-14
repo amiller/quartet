@@ -1,4 +1,4 @@
-import opennpy
+import freenect
 import numpy as np
 import dataset
 import cv2
@@ -15,10 +15,8 @@ def main():
         cmd = socket.recv()
         print 'command', cmd
         if cmd == 'getframe':
-            depth,_ = opennpy.sync_get_depth(0)
-            depth = depth.copy()
-            rgb,_ = opennpy.sync_get_video(0)
-            rgb = rgb.copy()
+            depth,_ = freenect.sync_get_depth(0,freenect.DEPTH_REGISTERED)
+            rgb,_ = freenect.sync_get_video(0)
             socket.send_pyobj((depth,rgb))
 
 if __name__ == '__main__': main()
