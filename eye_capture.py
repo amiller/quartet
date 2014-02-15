@@ -51,7 +51,7 @@ def main():
             os.makedirs(dump)
         except OSError:
             pass
-        camera_capture(range(NUM_EYE_CAMERAS), dump, mode)
+        camera_capture(range(1,1+NUM_EYE_CAMERAS), dump, mode)
 
 if __name__ == '__main__':
     main()
