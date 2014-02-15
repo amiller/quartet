@@ -14,6 +14,12 @@ cam = kinect_camera()
 if not 'window' in globals():
     window = PointWindow(size=(640,480))
 
+def show_rgb(name, image):
+    cv2.imshow(name, np.ascontiguousarray(image[:,:,::-1]))
+
+def show_depth(name, depth):
+    cv2.imshow(name, 1024./depth)
+
 @window.event
 def pre_draw():
     glLightfv(GL_LIGHT0, GL_POSITION, (-40, 200, 100, 0.0))

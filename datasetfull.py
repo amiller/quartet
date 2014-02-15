@@ -61,6 +61,7 @@ def load_dataset(pathname):
     depths = [np.zeros((480,640),np.uint16) for _ in range(5)]
     rgbs = [np.zeros((480,640,3),np.uint8) for _ in range(5)]
 
+def load_image_sets(current_path):
     global image_sets
     image_setses = glob.glob(current_path + '/image_sets-*.npz')
     image_sets = np.load(sorted(image_setses)[-1])
