@@ -12,6 +12,10 @@ def save():
         run('DISPLAY=:0 xhost +x localhost')
         run('DISPLAY=:0 python quartet.py save')
 
+def eyesave():
+    with cd('quartet_amiller'):
+        run('python eye_capture.py save')
+
 def calib():
     with cd('quartet_amiller'):
         run('DISPLAY=:0 python quartet.py save --decimate=10')
