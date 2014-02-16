@@ -71,13 +71,13 @@ def sip():
         if kinect:
             with cd('data/kinect_sets/' + kinect[0]):
                 last = run('ls -t1').strip().split()
-                for x in last[:10]:
+                for x in last[::30][:10]:
                     get(x, 'sip/%s-%s' % (env.host_string, x))
         eye = run('ls -t1 data/eye_sets/').strip().split()
         if eye:
             with cd('data/eye_sets/' + eye[0]):
                 last = run('ls -t1').strip().split()
-                for x in last[:10]:
+                for x in last[::30][:10]:
                     get(x, 'sip/%s-%s' % (env.host_string, x))
         #print('out[%s]' % )
 
