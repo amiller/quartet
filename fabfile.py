@@ -7,6 +7,9 @@ label = time.time()
 def dmidecode():
     sudo('dmidecode -s system-product-name')
 
+def df():
+    sudo('df -h | grep /dev/sda2')
+
 def save():
     with cd('quartet_amiller'):
         run('DISPLAY=:0 xhost +x localhost')
