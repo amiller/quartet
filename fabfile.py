@@ -1,4 +1,4 @@
-from fabric.api import run, cd, sudo, put, get
+from fabric.api import run, cd, sudo, put, get, env
 from fabric.contrib.files import append
 
 import time
@@ -64,6 +64,22 @@ def playback():
 def inspect():
     with cd('quartet_amiller'):
         run('python inspect_cams.py')
+
+def sip():
+    with cd('quartet_amiller'):
+        kinect = run('ls -t1 data/kinect_sets/').strip().split()
+        if kinect:
+            with cd('data/kinect_sets/' + kinect[0]):
+                last = run('ls -t1').strip().split()
+                for x in last[:10]:
+                    get(x, 'sip/%s-%s' % (env.host_string, x))
+        eye = run('ls -t1 data/eye_sets/').strip().split()
+        if eye:
+            with cd('data/eye_sets/' + eye[0]):
+                last = run('ls -t1').strip().split()
+                for x in last[:10]:
+                    get(x, 'sip/%s-%s' % (env.host_string, x))
+        #print('out[%s]' % )
 
 def preview():
     with cd('quartet_amiller'):
