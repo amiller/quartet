@@ -4,13 +4,13 @@ import numpy as np
 import os
 import snappy
 
-def view(filename):
+def view(filename, skip=1):
     cv2.namedWindow('rgb')
     cv2.namedWindow('depth')
     cv2.moveWindow('rgb',640,0)
     cv2.moveWindow('depth',0,0)
     files = glob.glob('%s/*.snappy' % (filename,)) + glob.glob('%s/*.jpg' % (filename,))
-    files = sorted(files, key=lambda f: os.path.basename(f)[2:])
+    files = sorted(files, key=lambda f: os.path.basename(f)[2:])[::skip]
     for f in files:
         if f.endswith('.jpg'):
             cv2.imshow('rgb', cv2.imread(f))

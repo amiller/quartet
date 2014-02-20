@@ -20,6 +20,8 @@ def main():
     subparser.set_defaults(mode='save')
     subparser = subparsers.add_parser('playback')
     subparser.set_defaults(mode='playback')
+    subparser.add_argument('--index', type=int, default=-1)
+    subparser.add_argument('--skip', type=int, default=1)
     subparser = subparsers.add_parser('playback3d')
     subparser.set_defaults(mode='playback3d')
     args = vars(parser.parse_args())    
@@ -30,7 +32,7 @@ def main():
         import glob
         import viewfakenect
         sets = glob.glob(KINECT_PATH + '/*/')
-        viewfakenect.view(sorted(sets)[-1])
+        viewfakenect.view(sorted(sets)[args['index']], skip=args['skip'])
     elif mode == 'playback3d':
         import viewdataset
         viewdataset.go(path=KINECT_PATH, threed=True)

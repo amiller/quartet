@@ -88,10 +88,10 @@ def once(rgbs, depths, threed=False):
     cv2.waitKey(50)
     
 
-def go(dset=None, path=KINECT_PATH, threed=False):
+def go(dset=None, path=KINECT_PATH, threed=False, skip=1):
     if dset is None:
         dataset.load_random_dataset(path)
     else:
         dataset.load_dataset(dset)
-    for rgbs, depths in dataset.iter(skip=1):
+    for rgbs, depths in dataset.iter(skip=skip):
         once(rgbs, depths, threed=threed)
