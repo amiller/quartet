@@ -29,7 +29,8 @@ def iter(rgb=True, depth=True, skip=1):
         cam = int(host[-1])-1
         fns.append((fn, cam, float(fngroups[0])))
     fns.sort(key=lambda x: x[2])
-    fns = fns[::skip]
+    fns = fns[skip:]
+    #fns = fns[::skip]
     for fn, cam, ts in fns:
         if (fn.endswith('.ppm') or fn.endswith('.jpg')) and rgb:
             yield ((cam, ts, cv2.imread(fn)),), ()
@@ -48,15 +49,16 @@ def advance():
         for (cam,_,depth) in d:
             depths[cam] = depth
         if not (None in depths or None in rgbs): break
+    return r, d
 
-def load_dataset(pathname):
+def load_dataset(pathname, skip=1):
     global current_path, frame_num
 
     # Check for consistency, count the number of images
     current_path = pathname
     frame_num = 0
     global frame_iter
-    frame_iter = iter()
+    frame_iter = iter(skip=skip)
     global depths, rgbs
     depths = [np.zeros((480,640),np.uint16) for _ in range(5)]
     rgbs = [np.zeros((480,640,3),np.uint8) for _ in range(5)]
