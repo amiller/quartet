@@ -52,7 +52,7 @@ def once():
         pm.rgba[:,:3] = rgb.reshape((-1,3)).astype('f')/256.0
         M = dataset.calib_mats[1][cam].astype('f')
         pm.xyz = np.dot(M[:3,:3], pm.xyz.T).T + M[:3,3]
-        partiomaya.write_points(folder + ('/pm-%f-%d.00001.prt' % (ts,cam)), pm)
+        partio_pointmodel.write_points(folder + ('/pm-%f-%d.00001.prt' % (ts,cam)), pm)
         print cam, ts
     else:
         print 'rgb'
